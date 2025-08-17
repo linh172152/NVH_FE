@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Simple accessible accordion component for FAQ
 const FaqAccordion: React.FC = () => {
@@ -63,10 +63,27 @@ const FaqAccordion: React.FC = () => {
     </div>
   );
 };
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MembershipPage: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const location = useLocation();
+
+  // If the route contains a hash (e.g. /membership#contact), scroll the target into view
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      // Delay slightly to ensure element is rendered
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // give a tiny visual offset if header is fixed (adjust as needed)
+          window.scrollBy(0, -12);
+        }
+      }, 50);
+    }
+  }, [location]);
 
   const membershipPlans = [
     {
@@ -287,7 +304,7 @@ const MembershipPage: React.FC = () => {
       </section>
 
     {/* Contact Section - full-bleed background, inner content constrained */}
-  <div style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)' }} className="bg-primary-600 text-white py-10">
+  <div id="contact" style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)' }} className="bg-primary-600 text-white py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left - contact details */}

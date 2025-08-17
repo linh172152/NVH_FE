@@ -50,10 +50,12 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-12">
-      {/* Hero Section (redesigned) */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="space-y-0">
+      {/* Hero Section (redesigned) - full bleed background */}
+      {/* -mt-8 removes the top padding from the layout's main container so the hero sits flush under the header */}
+      <div style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)' }} className="bg-gradient-to-r from-primary-600 to-primary-800 text-white overflow-hidden -mt-8">
+        <section className="relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Text */}
             <div className="text-left">
@@ -138,6 +140,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+        </div>
 
       {/* Services Section */}
       <section className="py-16">
@@ -204,29 +207,32 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-primary-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Sẵn sàng tham gia?</h2>
-          <p className="text-xl mb-8 text-primary-100">
-            Đăng ký ngay hôm nay để nhận ưu đãi đặc biệt cho thành viên mới
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/register"
-              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-            >
-              Đăng ký ngay
-            </Link>
-            <Link
-              to="/membership"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"
-            >
-              Tìm hiểu thêm
-            </Link>
+      {/* CTA Section - full-bleed and visually separated from footer */}
+      <div style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)' }} className="bg-primary-600 text-white overflow-hidden">
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Sẵn sàng tham gia?</h2>
+            <p className="text-lg sm:text-xl mb-10 text-primary-100 max-w-2xl mx-auto">
+              Đăng ký ngay hôm nay để nhận ưu đãi đặc biệt cho thành viên mới
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center bg-white text-primary-600 px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transition-all"
+              >
+                Đăng ký ngay
+              </Link>
+              <Link
+                to="/membership"
+                className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-primary-600 transition-colors"
+              >
+                Tìm hiểu thêm
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
