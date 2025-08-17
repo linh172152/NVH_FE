@@ -19,15 +19,43 @@ export interface MembershipType {
   price: number;
 }
 
+// Card Types: defines a named type of card and which service categories it can access
+export interface CardType {
+  card_type_id: string;
+  name: string;
+  description?: string;
+  // allowed category ids (service categories this card type can use)
+  allowed_category_ids: string[];
+}
+
+// Relation between Package and Service (many-to-many with constraints)
+export interface PackageService {
+  package_service_id: string;
+  package_id: string;
+  service_id: string;
+  // duration of one use in minutes (or 0 if not applicable)
+  per_use_minutes: number;
+  // min/max total price constraints when combining with this service
+  min_total_amount?: number;
+  max_total_amount?: number;
+  // allowed days and time frame at relation level (overrides package if present)
+  allowed_days?: string; // "1/0/0/0/1/0/0"
+  allowed_time_frame?: string; // "08:00-18:00"
+}
+
 export interface MembershipCard {
   card_id: string;
   account_id: string;
-  membership_type_id: string;
+  // Optional link to a membership type (legacy) or the new card type
+  membership_type_id?: string;
+  // card type defines which service categories the card can use
+  card_type_id?: string;
   card_number: string;
   issued_date: string;
   expiry_date: string;
   status: 'active' | 'expired' | 'canceled';
   membership_type?: MembershipType;
+  card_type?: CardType;
 }
 
 // Center & Service Types
@@ -63,11 +91,19 @@ export interface Package {
   package_id: string;
   name: string;
   description: string;
+  // Duration meaning: default unit (e.g., number of uses or months) depending on package
   duration: number;
+  // Total amount constraints for the package (min/max total price customer should pay for package)
   min_amount: number;
   max_amount: number;
+  // Allowed days encoded as "Mon/Tue/Wed/Thu/Fri/Sat/Sun" using 1/0 e.g. "1/0/0/0/1/0/0"
   allowed_days: string; // "1/0/0/0/1/0/0"
+  // Allowed overall time frame for using the package (e.g. "08:00-18:00")
   allowed_time_frame: string; // "08:00-18:00"
+  // Per-use constraints (minutes)
+  per_use_min_minutes?: number; // e.g. 30 => under 30 not allowed
+  per_use_max_minutes?: number; // e.g. 30 => maximum allowed per use
+  // Price for the package
   price: number;
 }
 
@@ -102,6 +138,9 @@ export interface ServiceOrder {
   amount: number;
   service?: Service;
   card_package?: CardPackage;
+  // Optional link to the package->service relation that was used for this order
+  package_service_id?: string;
+  package_service?: PackageService;
 }
 
 // Payment Types
