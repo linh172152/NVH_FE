@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
       name: 'Phòng Gym',
       description: 'Phòng tập thể dục hiện đại với đầy đủ thiết bị',
       image: 'https://www.nhavanhoasinhvien.vn/wp-content/uploads/2024/12/z6102634179598_0efe25717f0d11fb8140cf59f07e467a-scaled.jpg',
-      price: '50,000 VNĐ/lần',
+      price: '200,000 VNĐ/tháng',
     },
     {
       id: 2,

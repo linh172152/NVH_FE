@@ -35,11 +35,13 @@ const useAuth = () => {
             setUser(userData);
             // Save user to localStorage
             localStorage.setItem('nvh_user', JSON.stringify(userData));
+            setLoading(false);
+            return userData;
         } else {
             setError('Tên đăng nhập hoặc mật khẩu không đúng');
+            setLoading(false);
+            return undefined;
         }
-        
-        setLoading(false);
     };
 
     const logout = () => {

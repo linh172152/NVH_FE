@@ -141,7 +141,7 @@ const MembershipPage: React.FC = () => {
           {membershipPlans.map((plan) => (
             <div
               key={plan.id}
-              className={`relative bg-white rounded-lg shadow-lg p-6 border-2 transition-all ${
+              className={`relative bg-white rounded-lg shadow-lg p-6 border-2 transition-all flex flex-col ${
                 selectedPlan === plan.id
                   ? 'border-primary-500 shadow-xl'
                   : 'border-gray-200 hover:border-primary-300'
@@ -155,7 +155,8 @@ const MembershipPage: React.FC = () => {
                 </div>
               )}
 
-              <div className="text-center mb-6">
+              <div className="mb-6 flex-1">
+                <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
                 <p className="text-gray-600 text-sm mb-4">{plan.description}</p>
                 <div className="mb-4">
@@ -165,22 +166,23 @@ const MembershipPage: React.FC = () => {
                   <span className="text-gray-600"> VNĐ</span>
                 </div>
                 <p className="text-sm text-gray-500">Thời hạn: {plan.duration}</p>
-              </div>
+                </div>
 
-              <div className="space-y-3 mb-6">
-                {plan.features.map((feature, index) => (
-                  <div key={index} className="flex items-center">
+                <div className="space-y-3 mb-6">
+                {plan.features.map((feature) => (
+                  <div key={feature} className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span className="text-sm text-gray-700">{feature}</span>
                   </div>
                 ))}
+                </div>
               </div>
 
               <button
                 onClick={() => setSelectedPlan(plan.id)}
-                className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
+                className={`w-full py-3 px-4 rounded-lg font-medium transition-colors mt-auto ${
                   selectedPlan === plan.id
                     ? 'bg-primary-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'

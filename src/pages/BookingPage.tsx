@@ -8,7 +8,7 @@ const BookingPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const services = [
-    { id: 'gym', name: 'Phòng Gym', price: 50000 },
+    { id: 'gym', name: 'Phòng Gym', price: 200000 },
     { id: 'bowling', name: 'Bowling', price: 80000 },
     { id: 'swimming', name: 'Bể bơi', price: 60000 },
     { id: 'tennis', name: 'Sân Tennis', price: 120000 },

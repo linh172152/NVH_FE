@@ -23,8 +23,12 @@ const LoginPage: React.FC = () => {
     setLoading(true);
     
     try {
-      await login(formData);
-      navigate('/dashboard');
+      const user = await login(formData as { username: string; password: string });
+      if (user && user.role === 'member') {
+        navigate('/membership');
+      } else if (user) {
+        navigate('/dashboard');
+      }
     } catch (err) {
       console.error('Login failed:', err);
     } finally {
