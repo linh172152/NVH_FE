@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 import { useAuth } from '../hooks/useAuth';
 
 interface MainLayoutProps {
@@ -26,11 +27,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   // If user is not logged in, show only header
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
         <Header />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
           {children || <Outlet />}
         </main>
+        <Footer />
       </div>
     );
   }
@@ -38,25 +40,27 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   // If user is admin or staff, show sidebar layout
   if (user.role === 'admin' || user.role === 'staff') {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
         <Header />
-        <div className="flex">
+        <div className="flex flex-1 w-full">
           <Sidebar />
           <main className="flex-1 p-8">
             {children || <Outlet />}
           </main>
         </div>
+        <Footer />
       </div>
     );
   }
 
   // For regular members, show header-only layout
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
         {children || <Outlet />}
       </main>
+      <Footer />
     </div>
   );
 };
