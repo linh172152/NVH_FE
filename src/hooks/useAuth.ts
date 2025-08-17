@@ -1,22 +1,29 @@
 import { useState } from 'react';
-import axios from '../services/api';
+import type { Account } from '../types';
+import { demoUsers, demoPassword } from '../data/demoUsers';
 
 const useAuth = () => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<Account | null>(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
-    const login = async (credentials) => {
+    const login = async (credentials: { username: string; password: string }) => {
         setLoading(true);
         setError(null);
-        try {
-            const response = await axios.post('/login', credentials);
-            setUser(response.data);
-        } catch (err) {
-            setError(err.response ? err.response.data : 'Login failed');
-        } finally {
-            setLoading(false);
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const { username, password } = credentials;
+        
+        // Check if user exists and password is correct
+        if (demoUsers[username] && password === demoPassword) {
+            setUser(demoUsers[username]);
+        } else {
+            setError('Tên đăng nhập hoặc mật khẩu không đúng');
         }
+        
+        setLoading(false);
     };
 
     const logout = () => {
@@ -32,4 +39,4 @@ const useAuth = () => {
     };
 };
 
-export default useAuth;
+export { useAuth };
