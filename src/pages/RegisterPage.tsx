@@ -120,6 +120,12 @@ const RegisterPage: React.FC = () => {
             <span className="text-white font-bold text-xl">NVH</span>
           </div>
         </div>
+        <div className="mt-3 text-center">
+          <Link to="/" className="text-sm text-primary-600 hover:text-primary-500 inline-flex items-center gap-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+            Về trang chủ
+          </Link>
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Đăng ký tài khoản
         </h2>
