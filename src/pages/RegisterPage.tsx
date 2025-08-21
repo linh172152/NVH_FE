@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,10 @@ const RegisterPage: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
+  const { oauthLogin } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -95,6 +99,17 @@ const RegisterPage: React.FC = () => {
       setLoading(false);
       navigate('/login');
     }, 2000);
+  };
+
+  const handleGoogle = async () => {
+    setLoading(true);
+    try {
+      const user = await oauthLogin('google');
+      if (user && user.role === 'member') navigate('/membership');
+      else if (user) navigate('/dashboard');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -262,16 +277,35 @@ const RegisterPage: React.FC = () => {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Mật khẩu *
                 </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`input-field ${errors.password ? 'border-red-500' : ''}`}
-                  placeholder="Tạo mật khẩu"
-                />
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={`input-field pr-10 ${errors.password ? 'border-red-500' : ''}`}
+                    placeholder="Tạo mật khẩu"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(s => !s)}
+                    aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                    className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.02.154-2.004.444-2.92M6.34 6.34A9.969 9.969 0 0112 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-600">{errors.password}</p>
                 )}
@@ -281,16 +315,35 @@ const RegisterPage: React.FC = () => {
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                   Xác nhận mật khẩu *
                 </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className={`input-field ${errors.confirmPassword ? 'border-red-500' : ''}`}
-                  placeholder="Nhập lại mật khẩu"
-                />
+                <div className="relative">
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirm ? 'text' : 'password'}
+                    required
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className={`input-field pr-10 ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                    placeholder="Nhập lại mật khẩu"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm(s => !s)}
+                    aria-label={showConfirm ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                    className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700"
+                  >
+                    {showConfirm ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.02.154-2.004.444-2.92M6.34 6.34A9.969 9.969 0 0112 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
@@ -344,6 +397,18 @@ const RegisterPage: React.FC = () => {
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Hoặc</span>
               </div>
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <button onClick={handleGoogle} type="button" className="inline-flex items-center gap-2 px-4 py-2 border rounded shadow-sm hover:shadow-md">
+                <svg className="w-5 h-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.4H272v95.3h146.9c-6.3 33.8-25 62.5-53 81.6v67.8h85.7c50.1-46.1 79.9-114.3 79.9-194.3z"/>
+                  <path fill="#34A853" d="M272 544.3c72.6 0 133.6-24.1 178.2-65.4l-85.7-67.8c-23.9 16.1-54.4 25.6-92.5 25.6-71 0-131.2-48-152.6-112.4H34.9v70.8C79.6 487.8 168.6 544.3 272 544.3z"/>
+                  <path fill="#FBBC05" d="M119.4 323.8c-10.8-32-10.8-66.6 0-98.6V154.4H34.9c-41.9 82.5-41.9 181.9 0 264.4l84.5-64.9z"/>
+                  <path fill="#EA4335" d="M272 108.8c39.5-.6 77.6 14.1 106.6 40.8l79.8-79.8C402.9 24.3 344.6 0 272 0 168.6 0 79.6 56.5 34.9 154.4l84.5 70.8C140.8 156.8 200.9 108.8 272 108.8z"/>
+                </svg>
+                <span>Đăng ký bằng Google</span>
+              </button>
             </div>
 
             <div className="mt-6">

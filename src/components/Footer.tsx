@@ -4,7 +4,7 @@ const footerLinks = {
   services: [
     { name: 'Phòng Gym', href: '#services' },
     { name: 'Bowling', href: '#services' },
-    { name: 'Lớp nhóm', href: '#services' },
+    // { name: 'Lớp nhóm', href: '#services' },
   ],
   support: [
     { name: 'Trung tâm trợ giúp', href: '#' },

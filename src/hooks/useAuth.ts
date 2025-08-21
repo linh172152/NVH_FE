@@ -44,6 +44,32 @@ const useAuth = () => {
         }
     };
 
+    // Demo OAuth-like login (e.g. Google) — picks a demo user and signs in
+    const oauthLogin = async (provider: string) => {
+        setLoading(true);
+        setError(null);
+        // simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // For demo purposes, map provider to a demo user
+        // Google -> member account
+        let userData: Account | undefined;
+        if (provider === 'google') {
+            userData = demoUsers['member'];
+        }
+
+        if (userData) {
+            setUser(userData);
+            localStorage.setItem('nvh_user', JSON.stringify(userData));
+            setLoading(false);
+            return userData;
+        }
+
+        setError('OAuth login failed');
+        setLoading(false);
+        return undefined;
+    };
+
     const logout = () => {
         setUser(null);
         // Remove user from localStorage
@@ -55,6 +81,7 @@ const useAuth = () => {
         loading,
         error,
         login,
+    oauthLogin,
         logout,
     };
 };
