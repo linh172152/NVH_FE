@@ -9,7 +9,7 @@ const LoginPage: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login, oauthLogin, error } = useAuth();
+  const { login, error } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,16 +37,6 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleGoogle = async () => {
-    setLoading(true);
-    try {
-      const user = await oauthLogin('google');
-      if (user && user.role === 'member') navigate('/membership');
-      else if (user) navigate('/dashboard');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -55,6 +45,12 @@ const LoginPage: React.FC = () => {
           <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-xl">NVH</span>
           </div>
+        </div>
+        <div className="mt-3 text-center">
+          <Link to="/" className="text-sm text-primary-600 hover:text-primary-500 inline-flex items-center gap-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+            Về trang chủ
+          </Link>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Đăng nhập vào hệ thống
@@ -175,17 +171,7 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-4 flex justify-center">
-              <button onClick={handleGoogle} type="button" className="inline-flex items-center gap-2 px-4 py-2 border rounded shadow-sm hover:shadow-md">
-                <svg className="w-5 h-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.4H272v95.3h146.9c-6.3 33.8-25 62.5-53 81.6v67.8h85.7c50.1-46.1 79.9-114.3 79.9-194.3z"/>
-                  <path fill="#34A853" d="M272 544.3c72.6 0 133.6-24.1 178.2-65.4l-85.7-67.8c-23.9 16.1-54.4 25.6-92.5 25.6-71 0-131.2-48-152.6-112.4H34.9v70.8C79.6 487.8 168.6 544.3 272 544.3z"/>
-                  <path fill="#FBBC05" d="M119.4 323.8c-10.8-32-10.8-66.6 0-98.6V154.4H34.9c-41.9 82.5-41.9 181.9 0 264.4l84.5-64.9z"/>
-                  <path fill="#EA4335" d="M272 108.8c39.5-.6 77.6 14.1 106.6 40.8l79.8-79.8C402.9 24.3 344.6 0 272 0 168.6 0 79.6 56.5 34.9 154.4l84.5 70.8C140.8 156.8 200.9 108.8 272 108.8z"/>
-                </svg>
-                <span>Đăng nhập bằng Google</span>
-              </button>
-            </div>
+            {/* Google sign-in removed */}
 
             <div className="mt-6">
               <div className="text-center">

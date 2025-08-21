@@ -14,6 +14,7 @@ const MembershipPage = React.lazy(() => import('./pages/MembershipPage'));
 const BookingPage = React.lazy(() => import('./pages/BookingPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const MembersManagementPage = React.lazy(() => import('./pages/MembersManagementPage'));
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode; roles?: string[] }> = ({ 
@@ -230,7 +231,9 @@ const App: React.FC = () => {
           <Route path="/profile" element={
             <ProtectedRoute roles={['member', 'staff', 'admin']}>
               <MainLayout>
-                <div>Profile Page</div>
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <ProfilePage />
+                </React.Suspense>
               </MainLayout>
             </ProtectedRoute>
           } />
