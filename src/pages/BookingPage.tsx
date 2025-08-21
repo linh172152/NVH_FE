@@ -10,10 +10,6 @@ const BookingPage: React.FC = () => {
   const services = [
     { id: 'gym', name: 'Phòng Gym', price: 200000 },
     { id: 'bowling', name: 'Bowling', price: 80000 },
-    { id: 'swimming', name: 'Bể bơi', price: 60000 },
-    { id: 'tennis', name: 'Sân Tennis', price: 120000 },
-    { id: 'yoga', name: 'Phòng Yoga', price: 40000 },
-    { id: 'billiard', name: 'Bàn Billiard', price: 70000 },
   ];
 
   const timeSlots = [
