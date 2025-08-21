@@ -8,6 +8,8 @@ import { useAuth } from './hooks/useAuth';
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
+const AdminServiceManagement = React.lazy(() => import('./pages/AdminServiceManagement'));
+const AdminPackageManagement = React.lazy(() => import('./pages/AdminPackageManagement'));
 const MembershipPage = React.lazy(() => import('./pages/MembershipPage'));
 const BookingPage = React.lazy(() => import('./pages/BookingPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
@@ -90,20 +92,45 @@ const App: React.FC = () => {
             </MainLayout>
           } />
           
+          {/* Admin Services Management */}
+          <Route path="/services" element={
+            <ProtectedRoute roles={['admin']}>
+              <MainLayout>
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <AdminServiceManagement />
+                </React.Suspense>
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          {/* Admin Packages Management */}
+          <Route path="/packages" element={
+            <ProtectedRoute roles={['admin']}>
+              <MainLayout>
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <AdminPackageManagement />
+                </React.Suspense>
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
+          {/* Member Services View */}
+          <Route path="/member-services" element={
+            <ProtectedRoute roles={['member']}>
+              <MainLayout>
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <ServicesPage />
+                </React.Suspense>
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          
           <Route path="/dashboard" element={
             <ProtectedRoute roles={['admin', 'staff', 'member']}>
               <MainLayout>
                 <DashboardPage />
               </MainLayout>
             </ProtectedRoute>
-          } />
-          
-          <Route path="/services" element={
-            <MainLayout>
-              <React.Suspense fallback={<div>Loading...</div>}>
-                <ServicesPage />
-              </React.Suspense>
-            </MainLayout>
           } />
           
           <Route path="/membership" element={

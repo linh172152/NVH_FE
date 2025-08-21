@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
     try {
       const user = await login(formData as { username: string; password: string });
       if (user && user.role === 'member') {
-        navigate('/membership');
+        navigate('/member-services'); // Redirect member to member-services page
       } else if (user) {
         navigate('/dashboard');
       }

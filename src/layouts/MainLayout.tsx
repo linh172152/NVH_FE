@@ -24,7 +24,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     );
   }
 
-  // If user is not logged in, show only header
+  // If user is not logged in (guest), show only header with limited navigation
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -37,11 +37,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     );
   }
 
-  // If user is admin or staff, show sidebar layout
+  // If user is admin or staff, show sidebar layout WITHOUT header
   if (user.role === 'admin' || user.role === 'staff') {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Header />
         <div className="flex flex-1 w-full">
           <Sidebar />
           <main className="flex-1 p-8">
@@ -53,7 +52,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     );
   }
 
-  // For regular members, show header-only layout
+  // For regular members, show header-only layout (without Trang chủ)
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
