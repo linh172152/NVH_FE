@@ -12,6 +12,7 @@ const AdminServiceManagement = React.lazy(() => import('./pages/AdminServiceMana
 const AdminPackageManagement = React.lazy(() => import('./pages/AdminPackageManagement'));
 const MembershipPage = React.lazy(() => import('./pages/MembershipPage'));
 const BookingPage = React.lazy(() => import('./pages/BookingPage'));
+const PaymentPage = React.lazy(() => import('./pages/PaymentPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const MembersManagementPage = React.lazy(() => import('./pages/MembersManagementPage'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
@@ -147,6 +148,16 @@ const App: React.FC = () => {
               <MainLayout>
                 <React.Suspense fallback={<div>Loading...</div>}>
                   <BookingPage />
+                </React.Suspense>
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/payment" element={
+            <ProtectedRoute roles={['member', 'staff', 'admin']}>
+              <MainLayout>
+                <React.Suspense fallback={<div>Loading...</div>}>
+                  <PaymentPage />
                 </React.Suspense>
               </MainLayout>
             </ProtectedRoute>
